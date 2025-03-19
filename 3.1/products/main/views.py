@@ -34,11 +34,3 @@ class ProductFilteredReviews(APIView):
         pass
 
 
-# доп задание:
-class ProductFilteredReviews(APIView):
-    def get(self, request, product_id):
-        """обработайте значение параметра mark и
-        реализуйте получение отзывов по конкретному товару с определённой оценкой
-        реализуйте сериализацию полученных данных
-        отдайте отсериализованные данные в Response"""
-        pass
