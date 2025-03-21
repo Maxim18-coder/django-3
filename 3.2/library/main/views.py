@@ -5,40 +5,41 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from main.models import Book, Order
-from main.serializers import BookSerializer
+from main.serializers import BookSerializer, OrderSerializer
 
 
 @api_view(['GET'])
 def books_list(request):
+    books = Book.objects.all()
+    serializer = BookSerializer(books, many=True)
     """получите список книг из БД
     отсериализуйте и верните ответ
     """
-    return Response(...)
+    return Response(serializer.data)
 
 
 class CreateBookView(APIView):
+    serializer_class = BookSerializer
     def post(self, request):
-        # получите данные из запроса
-        serializer = BookSerializer(...) #передайте данные из запроса в сериализатор
-        if serializer.is_valid(raise_exception=True): #если данные валидны
+        serializer = self.serializer_class(data=request.data)
+        book = serializer.save()
+        if serializer.is_valid(raise_exception=True):
             return Response('Книга успешно создана') # возвращаем ответ об этом
 
 
 class BookDetailsView(RetrieveAPIView):
-    # реализуйте логику получения деталей одного объявления
-    ...
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
 
 
 class BookUpdateView(UpdateAPIView):
-    # реализуйте логику обновления объявления
-    ...
-
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
 
 class BookDeleteView(DestroyAPIView):
-    # реализуйте логику удаления объявления
-    ...
-
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
 
 class OrderViewSet(viewsets.ModelViewSet):
-    # реализуйте CRUD для заказов
-    ...
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
