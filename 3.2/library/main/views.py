@@ -41,5 +41,5 @@ class BookDeleteView(DestroyAPIView):
     serializer_class = BookSerializer
 
 class OrderViewSet(viewsets.ModelViewSet):
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
